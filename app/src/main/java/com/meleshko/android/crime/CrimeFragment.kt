@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import androidx.core.graphics.drawable.DrawableCompat.jumpToCurrentState
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
@@ -109,6 +108,11 @@ class CrimeFragment() : Fragment() {
                 crime.isSolved = isChecked
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        crimeDetailViewModel.saveCrime(crime)
     }
 
     companion object {
