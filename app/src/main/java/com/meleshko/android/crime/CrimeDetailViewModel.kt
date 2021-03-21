@@ -21,6 +21,6 @@ class CrimeDetailViewModel : ViewModel() {
     }
 
     fun saveCrime(crime: Crime) {
-        crimeRepository.equals(crime)
+        crimeRepository.updateCrime(crime)
     }
 }

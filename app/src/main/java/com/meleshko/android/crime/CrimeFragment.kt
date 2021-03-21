@@ -29,15 +29,12 @@ class CrimeFragment() : Fragment(), DatePickerFragment.Callbacks {
         ViewModelProvider(this).get(CrimeDetailViewModel::class.java)
     }
 
-    constructor(parcel: Parcel) : this() {
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         crime = Crime()
         val crimeId: UUID = arguments?.getSerializable(ARG_CRIME_ID) as UUID
+        crimeDetailViewModel.loadCrime(crimeId)
     }
 
     override fun onCreateView(
@@ -110,7 +107,7 @@ class CrimeFragment() : Fragment(), DatePickerFragment.Callbacks {
         dateButton.setOnClickListener {
             DatePickerFragment.newInstance(crime.date).apply {
                 setTargetFragment(this@CrimeFragment, REQUEST_DATE)
-                show(parentFragmentManager, DIALOG_DATE)
+                show(this@CrimeFragment.parentFragmentManager, DIALOG_DATE)
             }
         }
     }
@@ -120,7 +117,8 @@ class CrimeFragment() : Fragment(), DatePickerFragment.Callbacks {
         crimeDetailViewModel.saveCrime(crime)
     }
 
-    override fun onDateSelected(date: Date) { crime.date = date
+    override fun onDateSelected(date: Date) {
+        crime.date = date
         updateUI()
     }
 
